@@ -1,0 +1,83 @@
+MySQL Shell 8.0.26
+
+Copyright (c) 2016, 2021, Oracle and/or its affiliates.
+Oracle is a registered trademark of Oracle Corporation and/or its affiliates.
+Other names may be trademarks of their respective owners.
+
+Type '\help' or '\?' for help; '\quit' to exit.
+ MySQL  JS > \sql
+Switching to SQL mode... Commands end with ;
+ MySQL  SQL > \c root@localhost
+Creating a session to 'root@localhost'
+Fetching schema names for autocompletion... Press ^C to stop.
+Your MySQL connection id is 44 (X protocol)
+Server version: 8.0.26 MySQL Community Server - GPL
+No default schema selected; type \use <schema> to set one.
+ MySQL  localhost:33060+ ssl  SQL > CREATE schema seriesdb;
+Query OK, 1 row affected (0.0030 sec)
+ MySQL  localhost:33060+ ssl  SQL > CREATE TABLE series (id int Auto_increment Primary key, Series_name varchar(50), genre varchar(20), director_name varchar(40), country_name varchar(30), status varchar(30), yor date , yoe date );
+ERROR: 1046: No database selected
+ MySQL  localhost:33060+ ssl  SQL > \use seriesdb;
+MySQL Error 1049: Unknown database 'seriesdb;'
+ MySQL  localhost:33060+ ssl  SQL > \use 'seriesdb';
+Default schema set to `seriesdb`.
+Fetching table and column names from `seriesdb` for auto-completion... Press ^C to stop.
+ MySQL  localhost:33060+ ssl  seriesdb  SQL > CREATE TABLE series (id int Auto_increment Primary key, Series_name varchar(50), genre varchar(20), director_name varchar(40), country_name varchar(30), status varchar(30), yor date , yoe date );
+Query OK, 0 rows affected (0.0316 sec)
+ MySQL  localhost:33060+ ssl  seriesdb  SQL > insert into series(id, Series_name,genre,director_name,country_name,status,yor,yoe)  values (1,'Breaking bad','crime','Vincent','USA','end','2008-1-20','2013-09-29');
+Query OK, 1 row affected (0.0056 sec)
+ MySQL  localhost:33060+ ssl  seriesdb  SQL > insert into series(id, Series_name,genre,director_name,country_name,status,yor,yoe)  values (2,'Sacred Games','crime','Neeraj ghaywan','INDIA','end','2018-7-5','2019-05-15');
+Query OK, 1 row affected (0.0026 sec)
+ MySQL  localhost:33060+ ssl  seriesdb  SQL > insert into series(id, Series_name,genre,director_name,country_name,yor)  values (3,'Mirzapur','Action','gurmeet singh','INDIA','2018-11-16');
+Query OK, 1 row affected (0.0021 sec)
+ MySQL  localhost:33060+ ssl  seriesdb  SQL > insert into series(id, Series_name,genre,director_name,country_name,status,yor) values(4,'The Walking Dead','zombies','Frank Darabont','USA','renewed','2010-10-31');
+Query OK, 1 row affected (0.0020 sec)
+ MySQL  localhost:33060+ ssl  seriesdb  SQL > insert into series(id, Series_name,genre,director_name,country_name,status,yor,yoe)  values (5,'Game of thrones','drama','Neil Marshall','USA','end','2011-04-17','2019-05-19');
+Query OK, 1 row affected (0.0066 sec)
+ MySQL  localhost:33060+ ssl  seriesdb  SQL > insert into series(id, Series_name,genre,director_name,country_name,status,yor,yoe)  values (6,'The Big Bang Theory','Sitcom','Mark Cendrowsik','USA','end','2007-9-24','2019-05-16');
+Query OK, 1 row affected (0.0066 sec)
+ MySQL  localhost:33060+ ssl  seriesdb  SQL > insert into series(id, Series_name,genre,director_name,country_name,yor)  values (7,'Money heist','Crime','AlexPina','Europe','2007-9-24');
+Query OK, 1 row affected (0.0022 sec)
+ MySQL  localhost:33060+ ssl  seriesdb  SQL > select * from series;
++----+---------------------+---------+-----------------+--------------+---------+------------+------------+
+| id | Series_name         | genre   | director_name   | country_name | status  | yor        | yoe        |
++----+---------------------+---------+-----------------+--------------+---------+------------+------------+
+|  1 | Breaking bad        | crime   | Vincent         | USA          | end     | 2008-01-20 | 2013-09-29 |
+|  2 | Sacred Games        | crime   | Neeraj ghaywan  | INDIA        | end     | 2018-07-05 | 2019-05-15 |
+|  3 | Mirzapur            | Action  | gurmeet singh   | INDIA        | NULL    | 2018-11-16 | NULL       |
+|  4 | The Walking Dead    | zombies | Frank Darabont  | USA          | renewed | 2010-10-31 | NULL       |
+|  5 | Game of thrones     | drama   | Neil Marshall   | USA          | end     | 2011-04-17 | 2019-05-19 |
+|  6 | The Big Bang Theory | Sitcom  | Mark Cendrowsik | USA          | end     | 2007-09-24 | 2019-05-16 |
+|  7 | Money heist         | Crime   | AlexPina        | Europe       | NULL    | 2007-09-24 | NULL       |
++----+---------------------+---------+-----------------+--------------+---------+------------+------------+
+7 rows in set (0.0007 sec)
+ MySQL  localhost:33060+ ssl  seriesdb  SQL > select * from series  where yor between '2010-10-31' AND '2018-11-16';
++----+------------------+---------+----------------+--------------+---------+------------+------------+
+| id | Series_name      | genre   | director_name  | country_name | status  | yor        | yoe        |
++----+------------------+---------+----------------+--------------+---------+------------+------------+
+|  2 | Sacred Games     | crime   | Neeraj ghaywan | INDIA        | end     | 2018-07-05 | 2019-05-15 |
+|  3 | Mirzapur         | Action  | gurmeet singh  | INDIA        | NULL    | 2018-11-16 | NULL       |
+|  4 | The Walking Dead | zombies | Frank Darabont | USA          | renewed | 2010-10-31 | NULL       |
+|  5 | Game of thrones  | drama   | Neil Marshall  | USA          | end     | 2011-04-17 | 2019-05-19 |
++----+------------------+---------+----------------+--------------+---------+------------+------------+
+4 rows in set (0.0007 sec)
+ MySQL  localhost:33060+ ssl  seriesdb  SQL > select * from series  where yor between '2000-01-01' AND '2010-01-01';
++----+---------------------+--------+-----------------+--------------+--------+------------+------------+
+| id | Series_name         | genre  | director_name   | country_name | status | yor        | yoe        |
++----+---------------------+--------+-----------------+--------------+--------+------------+------------+
+|  1 | Breaking bad        | crime  | Vincent         | USA          | end    | 2008-01-20 | 2013-09-29 |
+|  6 | The Big Bang Theory | Sitcom | Mark Cendrowsik | USA          | end    | 2007-09-24 | 2019-05-16 |
+|  7 | Money heist         | Crime  | AlexPina        | Europe       | NULL   | 2007-09-24 | NULL       |
++----+---------------------+--------+-----------------+--------------+--------+------------+------------+
+3 rows in set (0.0006 sec)
+ MySQL  localhost:33060+ ssl  seriesdb  SQL > select * from series  where yor between '2010-01-01' AND '2021-01-01';
++----+------------------+---------+----------------+--------------+---------+------------+------------+
+| id | Series_name      | genre   | director_name  | country_name | status  | yor        | yoe        |
++----+------------------+---------+----------------+--------------+---------+------------+------------+
+|  2 | Sacred Games     | crime   | Neeraj ghaywan | INDIA        | end     | 2018-07-05 | 2019-05-15 |
+|  3 | Mirzapur         | Action  | gurmeet singh  | INDIA        | NULL    | 2018-11-16 | NULL       |
+|  4 | The Walking Dead | zombies | Frank Darabont | USA          | renewed | 2010-10-31 | NULL       |
+|  5 | Game of thrones  | drama   | Neil Marshall  | USA          | end     | 2011-04-17 | 2019-05-19 |
++----+------------------+---------+----------------+--------------+---------+------------+------------+
+4 rows in set (0.0007 sec)
+ MySQL  localhost:33060+ ssl  seriesdb  SQL >
